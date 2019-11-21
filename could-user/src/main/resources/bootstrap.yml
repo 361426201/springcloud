@@ -7,3 +7,10 @@ eureka:
 spring:
   application:
     name: cloud-user
+  cloud:
+    config:
+      discovery:
+        enabled: true   #如果希通过在配置中心找服务名的方式招待配置中心，那么这个属性就要设置成 true  默认false
+        service-id: cloud-config #配置中心的服务名
+      fail-fast: true   #将这个设置成true 表示连接配置中心失败，让程序启动失败
+
