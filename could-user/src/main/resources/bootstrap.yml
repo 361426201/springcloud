@@ -1,12 +1,20 @@
 server:
   port: 8800
 eureka:
+  instance:
+    health-check-url-path: /health    #健康检查的路径
+
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+    healthcheck:
+      enabled: true   #是否开启健康检查
+
 spring:
   application:
     name: cloud-user
+  # could的配置信息一定要写到bootstrap.yml中
+  # 因为cloud框架会优先读取bootstrap.yml配置文件，如果发现这里面没有这些配置，那么是无法将当前服务注册到注册中心的，这点需要特别注意，服务名也要写到ootstrap.yml文件中哦
   cloud:
     config:
       discovery:
