@@ -7,13 +7,15 @@ import com.netflix.zuul.exception.ZuulException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.*;
 
 @Component
 @Slf4j
 public class MyFilter extends ZuulFilter {
 
-    private static final RateLimiter RATE_LIMITER = RateLimiter.create(1000);
+    private static final RateLimiter RATE_LIMITER = RateLimiter.create(10);
     @Override
     public String filterType() {
         return PRE_TYPE;
@@ -52,7 +54,16 @@ public class MyFilter extends ZuulFilter {
     public Object run() throws ZuulException {
 
         log.info("校验开始==========>");
-
+        RequestContext ctx = RequestContext.getCurrentContext();
+        boolean flag = RATE_LIMITER.tryAcquire();
+        if(!flag){
+            ctx.setSendZuulResponse(false);// 过滤该请求，不对其进行路由
+            ctx.setResponseStatusCode(401);// 返回错误码
+            ctx.getResponse().setHeader("Content-Type", "application/json;charset=UTF-8");
+            ctx.setResponseBody("{\"result\":\"请求过于频繁!\"}");// 返回错误内容
+            ctx.set("isSuccess", false);
+            return null;
+        }
         log.info("放行=========>");
         return null;
     }

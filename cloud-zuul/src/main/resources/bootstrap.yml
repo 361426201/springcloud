@@ -18,5 +18,8 @@ zuul:
     user:  #随意命名，用于区分多个路由的唯一标识
       path: /user/**   #需要被转发的规则
       serviceId: cloud-user   #需要被转发的服务名称
+    order:
+      path: /order/**
+      serviceId: cloud-order
 
 
