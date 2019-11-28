@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RefreshScope
 public class UserController {
 
-    @Value("${test}")
-    private String port;
+    @Value("${test.name}")
+    private String name;
 
-    @RequestMapping(value = "/username",method = RequestMethod.GET)
+    @RequestMapping(value = "/test",method = RequestMethod.GET)
     public String getUserName(){
 
-        return "I'm 9527！    "+port;
+        return "hello："+name+"     人生总是起起落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落落！";
     }
 }
