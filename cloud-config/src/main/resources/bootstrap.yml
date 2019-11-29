@@ -10,24 +10,39 @@ spring:
   application:
     name: cloud-config  #服务名
   profiles:
-    #    active: native #拉取本地配置
-    active: git #拉取git配置
+#    active: native #拉取本地配置
+      active: git #拉取git配置
   #    active: subversion
   cloud:
+    bus:
+      trace:
+        enabled: true
+      enabled: true
     config:
       server:
-        #        native:
-        #          search-locations: file:F:\git\springcloud\config #本地拉起
-        git:
-          uri: https://github.com/361426201/cloud-config.git #git地址   需要注意一点，我拉取的是公共仓库，不需要用户名和密码，如果你拉取的是私有仓库，需要加上用户名密码
-          #   username: xxxx
-          #   password: xxxx
+#        native:
+#          search-locations: file:F:\git\springcloud\config #本地拉起
+          git:
+            uri: https://github.com/361426201/cloud-config.git #git地址   需要注意一点，我拉取的是公共仓库，不需要用户名和密码，如果你拉取的是私有仓库，需要加上用户名密码
+#            username: xxxx
+        #    password: xxxx
           label: master #指定拉取git的那个分支
-#        svn:
-#          uri: xxxxxxxxxxxxx  #svn的地址
-#          username: xxx  #用户名
-#          password: xxx  #密码
-#          default-label: trunk  #类似git中的分支
-#          search-paths: {application}  #可有可无
+  #        svn:
+  #          uri: xxxxxxxxxxxxx  #svn的地址
+  #          username: xxx  #用户名
+  #          password: xxx  #密码
+  #          default-label: trunk  #类似git中的分支
+  #          search-paths: {application}  #可有可无
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 
 
